@@ -154,10 +154,23 @@
 
   <script>
     let pauseAnimation=false;
-    function openPopup(){ document.getElementById('popup').style.display='flex'; pauseAnimation=true; }
-    function closePopup(){ document.getElementById('popup').style.display='none'; pauseAnimation=false; }
+    function openPopup(){ 
+      document.getElementById('popup').style.display='flex'; 
+      pauseAnimation=true; 
+    }
+    function closePopup(){ 
+      document.getElementById('popup').style.display='none'; 
+      pauseAnimation=false; 
+    }
 
-    const elements = [document.getElementById('chip'), document.getElementById('chip2'), document.getElementById('chip3'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('line1')];
+    const elements = [
+      document.getElementById('chip'), 
+      document.getElementById('chip2'), 
+      document.getElementById('chip3'), 
+      document.getElementById('dot1'), 
+      document.getElementById('dot2'), 
+      document.getElementById('line1')
+    ];
 
     function animateRandom(el){
       const wrap = document.getElementById('parallaxWrap');
@@ -179,11 +192,23 @@
       const title = document.getElementById('title').value.trim();
       const desc = document.getElementById('description').value.trim();
       const files = document.getElementById('files').files;
-      if(!title||!desc){alert('Пожалуйста, заполните название и описание.');return}
-      const subject = encodeURIComponent('Новый заказ — '+title);
-      let body = encodeURIComponent(`Название: ${title}\n\nОписание:\n${desc}\n\nФайлы: ${files.length} прикреплено.`);
-      const mailto = 'mailto:YOUR_EMAIL@example.com?subject='+subject+'&body='+body;
-      window.location.href = mailto;
+      
+      if(!title || !desc){
+        alert('Пожалуйста, заполните название и описание.');
+        return;
+      }
+
+      const email = '13corpmail@proton.me'; // адрес для отправки
+      const subject = encodeURIComponent('Новый заказ — ' + title);
+      
+      // Тело письма
+      let bodyText = `Название: ${title}\n\nОписание:\n${desc}\n\nКоличество прикрепленных файлов: ${files.length}`;
+      const body = encodeURIComponent(bodyText);
+
+      // Формируем mailto ссылку
+      const mailtoLink = `mailto:${email}?subject=${subject}&body=${body}`;
+      window.location.href = mailtoLink;
+
       closePopup();
     }
   </script>
