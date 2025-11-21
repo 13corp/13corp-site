@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>13Corp — IT помощь</title>
+  <style>
+    :root{
+      --bg-1: #0b0f1a;
+      --bg-2: #0f1724;
+      --accent: #00b7ff;
+      --neon: #8affff;
+      --highlight: #ffdd55;
+      --glass: rgba(255,255,255,0.04);
+      --card: rgba(255,255,255,0.03);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; min-height:100vh; font-family:Inter,ui-sans-serif,system-ui,Arial,sans-serif;
+      background:linear-gradient(180deg,var(--bg-1),var(--bg-2)); color:#e8f3ff; overflow:hidden; padding-top:40px;
+      display:flex; justify-content:center; align-items:center;
+    }
+
+    /* Logo Blocks */
+    .logo-block{position:fixed; top:14px; width:100%; display:flex; justify-content:space-between; padding:0 18px; z-index:60;}
+    .logo{font-weight:800; font-size:20px; letter-spacing:1px; padding:10px 14px; border-radius:10px;
+      background:linear-gradient(90deg,#051428,rgba(5,20,40,0.2)); backdrop-filter:blur(6px);
+      box-shadow:0 8px 30px rgba(0,183,255,0.08), inset 0 1px 0 rgba(255,255,255,0.02);
+      color:var(--neon); text-shadow:0 2px 12px rgba(0,183,255,0.14);
+      animation: logoGlow 2.5s ease-in-out infinite alternate, logoPulse 3s ease-in-out infinite;}
+    .logo::after{content:''; display:inline-block; margin-left:10px; width:10px; height:10px; border-radius:50%;
+      background:radial-gradient(circle at 30% 30%,#fff,transparent 40%),linear-gradient(45deg,#00b7ff,#7effc4);
+      box-shadow:0 0 18px rgba(0,183,255,0.8); vertical-align:middle;}
+    .sub-logo{font-weight:700; font-size:18px; letter-spacing:1px; padding:10px 14px; border-radius:10px;
+      background:linear-gradient(90deg,#102040,rgba(5,20,40,0.2)); backdrop-filter:blur(6px);
+      box-shadow:0 6px 24px rgba(120,160,255,0.2), inset 0 1px 0 rgba(255,255,255,0.02);
+      color:#ffdd55; text-shadow:0 2px 8px rgba(255,221,85,0.4);
+      animation: subLogoMove 4s ease-in-out infinite alternate, subLogoGlow 2s ease-in-out infinite alternate;
+      display:flex; align-items:center; justify-content:center;}
+
+    @keyframes logoGlow{0%{text-shadow:0 2px 12px rgba(0,183,255,0.14),0 0 6px rgba(0,183,255,0.5)}
+      50%{text-shadow:0 2px 20px rgba(0,183,255,0.2),0 0 14px rgba(0,183,255,0.9)}
+      100%{text-shadow:0 2px 12px rgba(0,183,255,0.14),0 0 6px rgba(0,183,255,0.5)}}
+    @keyframes logoPulse{0%{transform: scale(1)} 50%{transform: scale(1.05)} 100%{transform: scale(1)}}
+    @keyframes subLogoMove{0%{transform: translateY(0) rotate(0deg)} 50%{transform: translateY(4px) rotate(3deg)} 100%{transform: translateY(0) rotate(0deg)}}
+    @keyframes subLogoGlow{0%{text-shadow:0 2px 8px rgba(255,221,85,0.3),0 0 6px rgba(255,221,85,0.5)}
+      50%{text-shadow:0 2px 16px rgba(255,221,85,0.5),0 0 12px rgba(255,221,85,0.8)}
+      100%{text-shadow:0 2px 8px rgba(255,221,85,0.3),0 0 6px rgba(255,221,85,0.5)}}
+
+    /* Central animation area */
+    .parallax-wrap{position:relative; width:360px; height:360px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,0.01); border-radius:18px; border:1px solid rgba(255,255,255,0.03); overflow:hidden;}
+    .chip, .chip2, .chip3, .dot, .line{position:absolute; border-radius:12px; box-shadow:0 0 20px rgba(0,183,255,0.7), inset 0 0 10px rgba(0,183,255,0.3);}
+    .chip, .chip2, .chip3{width:50px; height:50px; background:linear-gradient(135deg,rgba(0,183,255,0.6),rgba(120,80,255,0.5));}
+    .dot{width:15px; height:15px; background:radial-gradient(circle, #00b7ff, #0ff); border-radius:50%;}
+    .line{width:2px; height:60px; background:linear-gradient(180deg,#00b7ff,transparent); border-radius:1px;}
+
+    /* Video Block */
+    .video-block{
+      position:fixed;
+      left:20px;
+      top:50%;
+      transform:translateY(-50%);
+      width:360px;
+      border-radius:14px;
+      overflow:hidden;
+      box-shadow:0 20px 40px rgba(0,0,0,0.5);
+    }
+    .video-block video{
+      width:100%;
+      display:block;
+    }
+
+    /* Right-lower info box */
+    .info-box{position:fixed; right:40px; bottom:40px; width:360px; padding:22px; border-radius:14px;
+      background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); backdrop-filter:blur(6px);
+      border:1px solid rgba(255,255,255,0.03); box-shadow:0 30px 60px rgba(2,8,22,0.6); display:flex; flex-direction:column; align-items:center;}
+    .info-box h2{margin:0 0 8px 0;font-size:20px;color:#fff; text-align:center}
+    .info-box p{margin:0;color:rgba(235,245,255,0.85);line-height:1.5; text-align:center}
+    .info-box .highlight{color: var(--highlight); font-weight:700; animation: highlightGlow 2s ease-in-out infinite alternate;}
+    @keyframes highlightGlow{0%{text-shadow:0 0 6px rgba(255,221,85,0.4)} 50%{text-shadow:0 0 14px rgba(255,221,85,0.8)} 100%{text-shadow:0 0 6px rgba(255,221,85,0.4)}}
+
+    /* Buttons */
+    .info-box .buttons-container{margin-top:20px; display:flex; flex-direction:column; gap:12px; width:100%; align-items:center;}
+    .info-box .buttons-container .side-btn{display:flex; justify-content:center; align-items:center; width:180px; height:50px; border-radius:12px;
+      color:#fff; font-weight:700; text-decoration:none; box-shadow:0 8px 20px rgba(0,0,0,0.4); transition:transform .3s, box-shadow .3s;}
+    .info-box .buttons-container .side-btn:hover{transform:translateY(-3px); box-shadow:0 12px 25px rgba(0,0,0,0.5)}
+    .telegram-btn{background:linear-gradient(90deg,#0088cc,#00a6ff);}
+    .order-side-btn{background:linear-gradient(90deg,#34a853,#56d364);}
+
+    /* Popup */
+    .popup{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background:#0d1525; z-index:100}
+    .popup-content{width:420px; background:#0d1525; padding:22px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); box-shadow:0 40px 120px rgba(2,6,12,0.7)}
+    .popup-content h3{margin:0 0 8px}
+    .popup-content input,.popup-content textarea{width:100%; padding:10px; border-radius:8px; border:1px solid rgba(255,255,255,0.03); background:transparent; color:#eaf7ff; margin-top:10px}
+    .popup-actions{display:flex; gap:10px; margin-top:12px}
+    .submit-btn{flex:1; padding:12px; border-radius:10px; border:none; background:linear-gradient(90deg,#0066ff,#00b7ff); color:#fff; font-weight:700}
+    .close-btn{flex:0 0 120px; padding:12px; border-radius:10px; border:none; background:transparent; color:#d0e9ff; border:1px solid rgba(255,255,255,0.04)}
+  </style>
+</head>
+<body>
+  <div class="logo-block">
+    <div class="logo">13Corp</div>
+    <div class="sub-logo">Сайт Визитка</div>
+  </div>
+
+  <!-- Video Block -->
+  <div class="video-block">
+    <video src="video.mp4" controls></video>
+  </div>
+
+  <div class="parallax-wrap" id="parallaxWrap">
+    <div class="chip" id="chip"></div>
+    <div class="chip2" id="chip2"></div>
+    <div class="chip3" id="chip3"></div>
+    <div class="dot" id="dot1"></div>
+    <div class="dot" id="dot2"></div>
+    <div class="line" id="line1"></div>
+  </div>
+
+  <aside class="info-box">
+    <h2>Помощь и разработка</h2>
+    <p>
+      Мы решаем любые вопросы, связанные с компьютерами, ПО и инфраструктурой — от настройки ПК и серверов до написания кастомных программ, скриптов и автоматизации бизнес-процессов. Также помогаем с вопросами, связанными с криптовалютными кошельками.<br><br>
+      <span class="highlight">Помогаем с восстановлением ваших Bitcoine Core кошельков с wallet.dat файлами</span><br><br>
+      Оформите заказ — опишите цель, приложите материалы (изображения, аудио) и мы подготовим решение.
+    </p>
+    <div class="buttons-container">
+      <a href="https://t.me/YOUR_TELEGRAM" target="_blank" class="side-btn telegram-btn" id="tgBtn">Telegram</a>
+      <a href="#" class="side-btn order-side-btn" id="orderBtn" onclick="openPopup()">Оставить заказ</a>
+    </div>
+  </aside>
+
+  <div class="popup" id="popup">
+    <div class="popup-content">
+      <h3>Оформить заказ</h3>
+      <form id="orderForm">
+        <input type="text" name="title" id="title" placeholder="Название заказа" required />
+        <textarea name="description" id="description" rows="4" placeholder="Краткое описание задачи" required></textarea>
+        <label style="font-size:13px;opacity:0.8;margin-top:8px;display:block">Прикрепить файлы (изображения, аудио)</label>
+        <input type="file" id="files" multiple accept="image/*,audio/*" />
+        <div class="popup-actions">
+          <button type="button" class="submit-btn" onclick="sendOrder()">Отправить</button>
+          <button type="button" class="close-btn" onclick="closePopup()">Закрыть</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let pauseAnimation=false;
+    function openPopup(){ document.getElementById('popup').style.display='flex'; pauseAnimation=true; }
+    function closePopup(){ document.getElementById('popup').style.display='none'; pauseAnimation=false; }
+
+    const elements = [document.getElementById('chip'), document.getElementById('chip2'), document.getElementById('chip3'), document.getElementById('dot1'), document.getElementById('dot2'), document.getElementById('line1')];
+
+    function animateRandom(el){
+      const wrap = document.getElementById('parallaxWrap');
+      const maxX = wrap.clientWidth - 50;
+      const maxY = wrap.clientHeight - 50;
+      if(pauseAnimation){ setTimeout(()=>animateRandom(el), 200); return; }
+      const x = Math.random()*maxX;
+      const y = Math.random()*maxY;
+      const duration = 1000 + Math.random()*2000;
+      el.style.transition = `top ${duration}ms ease-in-out, left ${duration}ms ease-in-out, transform ${duration}ms ease-in-out`;
+      el.style.top = y+'px';
+      el.style.left = x+'px';
+      el.style.transform = `rotate(${Math.random()*360}deg)`;
+      setTimeout(()=>animateRandom(el), duration);
+    }
+    elements.forEach(el=>animateRandom(el));
+
+    function sendOrder(){
+      const title = document.getElementById('title').value.trim();
+      const desc = document.getElementById('description').value.trim();
+      const files = document.getElementById('files').files;
+      if(!title||!desc){alert('Пожалуйста, заполните название и описание.');return}
+      const subject = encodeURIComponent('Новый заказ — '+title);
+      let body = encodeURIComponent(`Название: ${title}\n\nОписание:\n${desc}\n\nФайлы: ${files.length} прикреплено.`);
+      const mailto = 'mailto:YOUR_EMAIL@example.com?subject='+subject+'&body='+body;
+      window.location.href = mailto;
+      closePopup();
+    }
+  </script>
+</body>
+</html>
