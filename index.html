@@ -18,7 +18,7 @@ body,html{width:100%;height:100%;overflow-x:hidden;background:var(--bg);color:va
 .h-wrap::-webkit-scrollbar{height:10px;}
 .h-wrap::-webkit-scrollbar-thumb{background:var(--accent);border-radius:999px;}
 section{flex:0 0 100%;height:100vh;scroll-snap-align:start;display:flex;justify-content:center;align-items:center;padding-top:var(--header-height);}
-.block{width:90%;max-width:1250px;height:calc(100% - var(--header-height));background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);opacity:0;transform:translateY(20px);animation:fadeInUp .8s ease forwards;}
+.block{width:90%;max-width:1250px;height:calc(100% - var(--header-height));background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);opacity:1;transform:translateY(0);animation:fadeInUp .8s ease forwards;}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
 header.topbar{position:fixed;top:0;left:0;right:0;height:var(--header-height);display:flex;align-items:center;justify-content:center;gap:20px;background:rgba(0,0,0,0.45);backdrop-filter:blur(12px);z-index:100;border-bottom:1px solid rgba(255,255,255,0.1);}
@@ -89,7 +89,7 @@ label{opacity:.7;font-size:11px;margin-top:6px;display:block;text-align:center;}
 
 <!-- 1 блок -->
 <section>
-  <div class="block" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;opacity:1;">
+  <div class="block" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px">
     <h1>Техническая помощь и IT-решения</h1>
     <p class="lead">Настройка ПК, сети, программ, восстановление данных, крипто-операции.<br>
     Специализация — <span class="highlight" style="animation:pulse 2s infinite">обработка wallet.dat</span></p>
@@ -100,7 +100,7 @@ label{opacity:.7;font-size:11px;margin-top:6px;display:block;text-align:center;}
 
 <!-- 2 блок — услуги -->
 <section>
-  <div class="block" style="opacity:1;">
+  <div class="block">
     <h1>Услуги</h1>
     <div class="services">
       <div class="service-card"><strong>Установка ПО</strong><p>Подбор версии, драйверы, оптимизация.</p></div>
@@ -121,24 +121,24 @@ label{opacity:.7;font-size:11px;margin-top:6px;display:block;text-align:center;}
 
 <!-- 3 блок — видео -->
 <section>
-  <div class="block" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:20px;opacity:1;">
-    <h1>О нас</h1>
-    <p style="max-width:700px;opacity:.85;line-height:1.55;font-size:15px;">
-        Мы занимаемся разработкой IT-решений, восстановлением данных,
-        криптографией и обработкой wallet.dat. Берёмся за сложные задачи
-        и находим решения там, где другие сдаются.
-    </p>
-    <div class="video-box">
-        <video controls style="width:100%;height:100%;object-fit:cover;">
-            <source src="video.mp4" type="video/mp4">
-        </video>
-    </div>
+<div class="block" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:20px">
+  <h1>О нас</h1>
+  <p style="max-width:700px;opacity:.85;line-height:1.55;font-size:15px;">
+      Мы занимаемся разработкой IT-решений, восстановлением данных,
+      криптографией и обработкой wallet.dat. Берёмся за сложные задачи
+      и находим решения там, где другие сдаются.
+  </p>
+  <div class="video-box">
+      <video controls style="width:100%;height:100%;object-fit:cover;">
+          <source src="video.mp4" type="video/mp4">
+      </video>
   </div>
+</div>
 </section>
 
-<!-- 4 блок — форма с прогресс-баром на fflate -->
+<!-- 4 блок — форма с прогресс-баром -->
 <section>
-  <div class="block" style="opacity:1;">
+  <div class="block">
     <h1 style="font-size:18px;">Оформить заказ</h1>
     <div class="col">
       <label>Название задачи</label>
@@ -190,7 +190,7 @@ function draw() {
 }
 draw();
 
-// Форма с fflate
+// Форма с прогресс-баром и fflate
 document.getElementById('sendMail').onclick = async () => {
   const title = document.getElementById('title').value.trim();
   const desc = document.getElementById('desc').value.trim();
@@ -198,7 +198,6 @@ document.getElementById('sendMail').onclick = async () => {
   const filesInput = document.getElementById('files');
   const status = document.getElementById('status');
   const progressBar = document.getElementById('progressBar');
-
   if(!title || !desc || !contact){alert('Заполните все поля!'); return;}
   status.textContent = 'Создание зашифрованного архива...';
   progressBar.style.width = '0%';
@@ -206,16 +205,16 @@ document.getElementById('sendMail').onclick = async () => {
   try {
     const files = {};
     files['заказ.txt'] = new TextEncoder().encode(`Название: ${title}\nОписание: ${desc}\nКонтакт: ${contact}`);
-
     for(let i=0;i<filesInput.files.length;i++){
-      const f = filesInput.files[i];
-      files[f.name] = new Uint8Array(await f.arrayBuffer());
+      const file = filesInput.files[i];
+      const arrayBuffer = await file.arrayBuffer();
+      files[file.name] = new Uint8Array(arrayBuffer);
     }
 
-    const zipData = fflate.zipSync(files, {level:9});
-    const blob = new Blob([zipData], {type:'application/zip'});
+    const zipped = fflate.zipSync(files, {level:9});
+    const blob = new Blob([zipped], {type:'application/zip'});
 
-    progressBar.style.width = '70%';
+    progressBar.style.width='70%';
     status.textContent = 'Отправка на корпоративную почту...';
 
     const formData = new FormData();
@@ -240,8 +239,6 @@ document.getElementById('sendMail').onclick = async () => {
 };
 </script>
 
-<style>
-@keyframes pulse{0%{text-shadow:0 0 5px var(--accent2);}50%{text-shadow:0 0 18px var(--accent2);}100%{text-shadow:0 0 5px var(--accent2);}}
-</style>
+<style>@keyframes pulse{0%{text-shadow:0 0 5px var(--accent2);}50%{text-shadow:0 0 18px var(--accent2);}100%{text-shadow:0 0 5px var(--accent2);}}</style>
 </body>
 </html>
