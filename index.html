@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>13Corp — IT помощь и услуги</title>
-
 <!-- Подключаем fflate -->
 <script src="https://cdn.jsdelivr.net/npm/fflate@0.7.4/umd/index.js"></script>
 
@@ -23,19 +22,109 @@ section{flex:0 0 100%;height:100vh;scroll-snap-align:start;display:flex;justify-
 .block{width:90%;max-width:1250px;height:calc(100% - var(--header-height));background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--border);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);opacity:0;transform:translateY(20px);animation:fadeInUp .8s ease forwards;}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 
+header.topbar{position:fixed;top:0;left:0;right:0;height:var(--header-height);display:flex;align-items:center;justify-content:center;gap:20px;background:rgba(0,0,0,0.45);backdrop-filter:blur(12px);z-index:100;border-bottom:1px solid rgba(255,255,255,0.1);}
+.logo{display:flex;align-items:center;gap:12px;padding:6px 14px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:14px;animation:logoPulse 2s infinite alternate;cursor:pointer;}
+.logo span.title{font-size:22px;font-weight:900;color:var(--accent2);animation:colorShift 4s infinite alternate;}
+.logo span.sub{font-size:10px;opacity:.8;letter-spacing:1px;margin-top:-4px;}
+@keyframes logoPulse{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
+@keyframes colorShift{0%{color:#41B3FF;}25%{color:#00FFFF;}50%{color:#A0FFFA;}75%{color:#41B3FF;}100%{color:#0099FF;}}
+
 h1{font-size:32px;margin-bottom:14px;} 
-label{display:block;opacity:.7;margin-top:6px;font-size:11px;text-align:center;}
-input,textarea,button{width:100%;padding:6px;border-radius:8px;border:1px solid var(--border);background:#0003;color:white;font-size:12px;}
-button{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;font-weight:700;cursor:pointer;margin-top:6px;}
+p.lead{font-size:16px;opacity:.9;margin-bottom:8px;} 
+.highlight{color:var(--accent2);font-weight:700;}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px;}
+.service-card{padding:14px;border:1px solid var(--border);border-radius:14px;background:rgba(255,255,255,0.04);transition:.25s ease;}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 0 16px rgba(0,200,255,0.35);border-color:var(--accent);}
+.service-card strong{font-size:15px;color:var(--accent2);} 
+.service-card p{opacity:.8;margin-top:4px;font-size:13px;}
+
+input,textarea,button,label{font-size:12px;}
+input,textarea{width:100%;background:#0003;color:white;border:1px solid var(--border);border-radius:8px;padding:6px;}
+button{padding:8px 12px;background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:6px;}
+button:hover{opacity:.9;}
+label{opacity:.7;font-size:11px;margin-top:6px;display:block;text-align:center;}
+.col{display:flex;flex-direction:column;gap:8px;width:100%;max-width:350px;margin:0 auto;text-align:center;}
+
+.nav-btn{position:fixed;top:50%;transform:translateY(-50%);width:50px;height:50px;border-radius:50%;border:none;background:rgba(255,255,255,0.05);backdrop-filter:blur(10px);color:white;font-size:26px;cursor:pointer;z-index:90;transition:.3s;}
+.nav-btn:hover{background:rgba(255,255,255,0.1);box-shadow:0 0 12px rgba(0,170,255,0.25);}
+#prevBtn{left:10px;}#nextBtn{right:10px;}
+
+.video-box{width:100%;max-width:480px;aspect-ratio:16/9;background:#0004;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,0.25);box-shadow:0 0 25px rgba(0,180,255,0.25);transition:.4s;}
+.video-box:hover{box-shadow:0 0 35px rgba(0,200,255,0.55);transform:scale(1.03);}
+
+.cyber-field{width:100%;max-width:380px;height:140px;position:relative;border-radius:14px;border:1px solid rgba(0,255,255,0.35);box-shadow:0 0 18px rgba(0,200,255,0.35);overflow:hidden;background:rgba(0,255,255,0.03);backdrop-filter:blur(7px);margin:10px 0;}
+.cyber-field canvas{position:absolute;top:0; left:0;width:100%;height:100%;}
+
 .progress-container{width:100%;background:rgba(255,255,255,0.1);border-radius:6px;margin-top:8px;overflow:hidden;height:10px;}
 .progress-bar{width:0%;height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width 0.2s;}
-.col{display:flex;flex-direction:column;gap:8px;width:100%;max-width:350px;margin:0 auto;text-align:center;}
-@media(max-width:650px){.col{max-width:300px;} input,textarea,button{font-size:11px;}}
+
+@media(max-width:900px){.services{grid-template-columns:repeat(2,1fr);}h1{font-size:28px;}}
+@media(max-width:650px){
+  body,html{overflow-x:hidden;}
+  .h-wrap{flex-direction:column;height:auto;overflow-y:auto;scroll-snap-type:y mandatory;}
+  section{height:auto;min-height:100vh;}
+  .services{grid-template-columns:1fr;}
+  h1{font-size:20px;} 
+  .block{padding:20px;} 
+  input,textarea,button,label{font-size:11px;} 
+  .col{max-width:300px;} 
+  .logo span.title{font-size:16px;} 
+  .logo span.sub{font-size:8px;} 
+  .nav-btn{display:none;}
+}
 </style>
 </head>
 <body>
 
+<header class="topbar">
+  <div class="logo" onclick="scrollToBlock1()">
+    <span class="title">13CORP</span>
+    <span class="sub">IT • ПОМОЩЬ • РЕШЕНИЯ</span>
+  </div>
+</header>
+
+<button class="nav-btn" id="prevBtn">◀</button>
+<button class="nav-btn" id="nextBtn">▶</button>
+
 <div class="h-wrap" id="hwrap">
+
+<!-- 1 блок -->
+<section>
+  <div class="block" style="text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px">
+    <h1>Техническая помощь и IT-решения</h1>
+    <p class="lead">Настройка ПК, сети, программ, восстановление данных, крипто-операции.<br>
+    Специализация — <span class="highlight" style="animation:pulse 2s infinite">обработка wallet.dat</span></p>
+    <div class="cyber-field"><canvas id="cryptoCanvas"></canvas></div>
+    <button onclick="window.location.href='https://t.me/YOUR_TELEGRAM'">Связаться в Telegram</button>
+  </div>
+</section>
+
+<!-- 2 блок — услуги -->
+<section>
+  <div class="block">
+    <h1>Услуги</h1>
+    <div class="services">
+      <!-- твои карточки услуг -->
+    </div>
+  </div>
+</section>
+
+<!-- 3 блок — видео -->
+<section>
+<div class="block" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:20px">
+  <h1>О нас</h1>
+  <p style="max-width:700px;opacity:.85;line-height:1.55;font-size:15px;">
+      Мы занимаемся разработкой IT-решений, восстановлением данных,
+      криптографией и обработкой wallet.dat. Берёмся за сложные задачи
+      и находим решения там, где другие сдаются.
+  </p>
+  <div class="video-box">
+      <video controls style="width:100%;height:100%;object-fit:cover;">
+          <source src="video.mp4" type="video/mp4">
+      </video>
+  </div>
+</div>
+</section>
 
 <!-- 4 блок — форма с прогресс-баром -->
 <section>
@@ -60,6 +149,38 @@ button{background:linear-gradient(90deg,var(--accent),var(--accent2));color:#fff
 </div>
 
 <script>
+// Навигация
+const hwrap=document.getElementById('hwrap');
+document.getElementById('nextBtn').onclick=()=>hwrap.scrollBy({left:window.innerWidth,behavior:'smooth'});
+document.getElementById('prevBtn').onclick=()=>hwrap.scrollBy({left:-window.innerWidth,behavior:'smooth'});
+hwrap.addEventListener('wheel',e=>{e.preventDefault();hwrap.scrollLeft+=e.deltaY;},{passive:false});
+function scrollToBlock1(){hwrap.scrollTo({left:0,behavior:'smooth'});}
+
+// Крипто-анимация
+const canvas = document.getElementById('cryptoCanvas');
+const ctx = canvas.getContext('2d');
+canvas.width = canvas.offsetWidth;
+canvas.height = canvas.offsetHeight;
+const letters = '0123456789ABCDEF';
+const fontSize = 16;
+const columns = Math.floor(canvas.width / fontSize);
+const drops = Array(columns).fill(1);
+function draw() {
+    ctx.fillStyle = 'rgba(10,15,24,0.1)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ffff';
+    ctx.font = fontSize + 'px monospace';
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i]++;
+    }
+    requestAnimationFrame(draw);
+}
+draw();
+
+// Форма с прогресс-баром и fflate
 document.getElementById('sendMail').onclick = async () => {
   const title = document.getElementById('title').value.trim();
   const desc = document.getElementById('desc').value.trim();
@@ -114,5 +235,6 @@ document.getElementById('sendMail').onclick = async () => {
 };
 </script>
 
+<style>@keyframes pulse{0%{text-shadow:0 0 5px var(--accent2);}50%{text-shadow:0 0 18px var(--accent2);}100%{text-shadow:0 0 5px var(--accent2);}}</style>
 </body>
 </html>
